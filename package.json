@@ -1,0 +1,14 @@
+{
+  "name": "restPouceDor",
+  "version": "1.0.0",
+  "description": "Serveur Rest pour le Pouce D'or",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Loïc Padier",
+  "license": "MIT",
+  "dependencies": {
+    "restify": "^2.8.4"
+  }
+}
