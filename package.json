@@ -2,13 +2,15 @@
   "name": "restPouceDor",
   "version": "1.0.0",
   "description": "Serveur Rest pour le Pouce D'or",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:watch": "nodemon server.js"
   },
   "author": "Loïc Padier",
   "license": "MIT",
   "dependencies": {
+    "mongoose": "3.8",
     "restify": "^2.8.4"
   }
 }
