@@ -2,12 +2,16 @@ var
 	restify    = require("restify"),
 	mongoose   = require("mongoose"),
 	models     = require("./models"),
+	login      = require("./login"),
+	valid      = require("./middlewares/validateRequest"),
+	teams      = require("./teams"),
 	Team       = models.Team,
 	University = models.University,
-	Student    = models.Student;
+	Student    = models.Student,
 
-var db = mongoose.connect("mongodb://localhost/poucedor");
-var server = restify.createServer();
+	db = mongoose.connect("mongodb://localhost/poucedor"),
+
+	server = restify.createServer();
 
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
@@ -17,29 +21,9 @@ function saveError(err) {
 	// TODO do something with the error
 }
 
-server.get("api/v1/teams/simple", function(req, res, next) {
-	Team.find().populate("university student1 student2").exec(function(err, teams) {
-		var filteredTeams = teams.map(function(team) {
-			console.log(JSON.stringify(team))
-			return {
-				name: team.name,
-				student1: team.student1,
-				student2: team.student2,
-				positions: {
-					count: team.positions.length,
-					last: team.positions.reduce(function(a,b) {
-						return a.timestamp>b.timestamp ? a : b;
-					}),
-					furthest: team.positions.reduce(function(a,b) {
-						return a.distance > b.distance ? a : b;
-					})
-				}
-			}
-		});
-		res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
-		res.end(JSON.stringify(filteredTeams));
-	})
-});
+// server.get("api/v1/teams/login", login);
+
+server.get("api/v1/teams/simple", valid, teams.findAllTeams);
 
 server.get("/api/v1/teams", function(req, res, next) {
 	Team.find().populate("university student1 student2").exec(function(err, teams) {
@@ -79,6 +63,8 @@ server.post("/api/v1/teams/:id/positions", function(req, res, next) {
 	});
 })
 
-server.listen(3000, function() {
-	console.log("server started @ 3000");
+var port = 4500;
+
+server.listen(4500, function() {
+	console.log("server started @ 4500");
 });

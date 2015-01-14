@@ -1,3 +1,4 @@
 .idea/
 mongodb/
 node_modules/
+config/secret.js
