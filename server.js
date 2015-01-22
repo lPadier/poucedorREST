@@ -1,5 +1,5 @@
 var
-	port       = process.env.port || 4500,
+	port       = process.env.port || 8080,
 	restify    = require("restify"),
 	mongoose   = require("mongoose"),
 	models     = require("./models"),
