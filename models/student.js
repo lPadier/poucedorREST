@@ -4,24 +4,27 @@ var
 
 	StudentSchema = new Schema({
 		name: {
-			first: {
-				type: String,
-				required: true
-			},
-			middle: {
-				type: String
-			},
-			last: {
-				type: String,
-				required: true
-			}
+			type: String,
+			required: true
 		},
 		email: {
 			type: String,
-			required: true
+			required: true,
+			unique: true,
+			select: false
 		}
 	}),
 
 	Student = mongoose.model("Student", StudentSchema);
+
+	StudentSchema.path("email").validate(function(value, done) {
+		this.model("Student").count({ email: value }, function(err, count) {
+			if (err) {
+				return done(err);
+			}
+			// If `count` is greater than zero, "invalidate"
+			done(!count);
+		});
+	}, "Email already exists");
 
 module.exports = Student;

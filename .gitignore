@@ -2,3 +2,4 @@
 mongodb/
 node_modules/
 config/secret.js
+distance/apiKey.js

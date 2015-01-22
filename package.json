@@ -11,6 +11,7 @@
   "author": "Loïc Padier",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^0.8.0",
     "jsonwebtoken": "^3.2.1",
     "mongoose": "3.8",
     "restify": "^2.8.4"
