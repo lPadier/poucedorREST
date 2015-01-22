@@ -17,16 +17,16 @@ function login(req, res, next) {
 				{ "email2": username }
 			]
 		},
-		"password email1 email2",
-		function(err, team) {
+		"password email1 email2 name student1 student2"
+		).populate("student1 student2")
+		.exec(function(err, team) {
 			if (err) {
 				console.err(err);
 			}
-			console.log(team.password);
 			if (team !== null && team.password !== undefined) {
 				bcrypt.compare(password, team.password, function(err, correct) {
 					if (correct) {
-						res.json(genToken(team._id));
+						res.json(genToken(team._id, team.name, team.student1.name, team.student2.name));
 						return;
 					} else {
 						return next(new restify.InvalidCredentialsError ("token is not valid"));
@@ -36,10 +36,12 @@ function login(req, res, next) {
 				return next(new restify.InvalidCredentialsError ("token is not valid"));
 			}
 		});
+	} else {
+		return next(new restify.InvalidCredentialsError ("token is not valid"));
 	}
 }
 
-function genToken(id) {
+function genToken(id, teamName, student1Name, student2Name) {
 	var token = jwt.sign({
 		id: id
 	}, secret(), {
@@ -48,7 +50,14 @@ function genToken(id) {
 
 	return {
 		token: token,
-		_id: id
+		_id: id,
+		teamName:teamName,
+		student1: {
+			name: student1Name
+		},
+		student2: {
+			name: student2Name
+		}
 	};
 }
 
