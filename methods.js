@@ -18,6 +18,7 @@ function findAllTeamsSimple(req, res, next) {
 				name: team.name,
 				student1: team.student1,
 				student2: team.student2,
+				university: team.university,
 				positions: {
 					count: team.positions.length,
 					last: team.positions.reduce(function(a, b) {
