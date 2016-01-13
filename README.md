@@ -23,11 +23,11 @@ npm start
 When the server is started on port 8080 or `$PORT` if specified, it opens up the following routes:
 
 ### GET
--api/v1/teams/simple
--api/v1/teams
+- api/v1/teams/simple
+- api/v1/teams
 
 ### POST
--api/v1/login
--api/v1/teams/:id/positions
--api/v1/teams
--api/v1/universities
+- api/v1/login
+- api/v1/teams/:id/positions
+- api/v1/teams
+- api/v1/universities
